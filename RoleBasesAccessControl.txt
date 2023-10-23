@@ -1,0 +1,18 @@
+Roles and administrators:
+Role based access control (RBAC):
+Security feature that is used to grant specific permissions to user groups or applications based on their roles
+in your organizations.
+
+In order for a user to interact with a resource in Azure it needs permission.
+e.g. grant user to READ_ACCESS to storage account
+
+Roles like Developer role, IT Operations role etc.
+
+We can assign 2 different toles to single user.
+And we assign the permissions to the role not directly to the user.
+And assign that role to the user.
+So this avoids giving thousands of permission to individual user.
+(i.e. managing at the role level not individual level.)
+
+All users treated the same for role and no secret extra permissions.
+Easier for new users added to the system to be assigned the correct permissions.

@@ -1,0 +1,70 @@
+App Services:
+Create, build, deploy, and manage powerful web, mobile, and API apps for employees or customers using a single 
+back-end. Build standards-based web apps and APIs using .NET, Java, Node.js, PHP, and Python.
+We dont have control over the actual hardware and we dont really know the characterstics of hardware.
+We just need to upload the code and configuration for that code and azure will run it.
+Azure App Service is a powerful web application hosting platform. 
+Azure Functions, built on top of the App Service infrastructure, enables you to easily build 
+serverless and event-driven compute workloads. Both services are frequently used in multitenant solutions.
+
+WebApp:
+App Service Web Apps lets you quickly build, deploy, and scale enterprise-grade web, mobile, and API apps 
+running on any platform. Meet rigorous performance, scalability, security and compliance requirements while 
+using a fully managed platform to perform infrastructure maintenance.
+It has got built in integration with VS code, Github actions, Azure devops.
+
+API App: Its a web app that doesn't have user interface but communicates with xml or json.
+
+Mobile App:
+It is a backend app that integrates with mobile on frontend.
+
+API and mobile app functionalities are covered in Web app.
+
+Create a new Web App:
+The name of webapp is fully qualified(.azurewebsites.net) and it should be unique as it appears across azure.
+Select Code based webapp or docker container or Static webapp.
+Select runtime.
+
+Select the pricing plans:
+
+Zone Redundancy:
+Only available for Premium plan.
+
+GitHub Actions and Virtual Networking:
+GitHub Actions is an automation framework that can build, test, and deploy your app whenever a new commit is 
+made in your repository. If your code is in GitHub, choose your repository here and we will add a workflow file 
+to automatically deploy your app to App Service. If your code is not in GitHub, go to the Deployment Center once
+the web app is created to set up your deployment.
+We get option of continuos deployment.
+
+In virtual networking we dont need to setup anything like virtual network, security groups etc azure will take 
+care of it.
+
+Monitoring:
+Azure Monitor application insights is an Application Performance Management (APM) service for developers 
+and DevOps professionals. Enable it below to automatically monitor your application. It will detect performance 
+anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually 
+do with your app. Your bill is based on amount of data used by Application Insights and your data retention 
+settings.
+
+After deploying the web app go to the resource:
+Click on Deployment slots.
+Deployment slots: Deployment slots are live apps with their own hostnames. App content and configurations 
+elements can be swapped between two deployment slots, including the production slot.
+We can add multiple slots like development, production etc.
+we can send some amount of traffic to development slot from prod to do real production testing.
+We can also swap the slots, we can put dev slot into prod for newer version.
+And we can undo this swap by again swapping with older slot.
+
+WebApp Settings:
+Configuration:
+Application settings allow you to seperate out dynamic variables of a application from code.
+Used to put sensitive values like api keys, user ids etc so that we dont need to put them in 
+github.
+Scale up -> Increase the size of the instance.
+
+Scale out -> Increase the number of the instances.
+We can set the scaling to manual or automatic(Rules based).
+
+
+

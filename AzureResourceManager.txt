@@ -1,0 +1,47 @@
+Azure Resource Manager (ARM): 
+Steps for creating a template for VM:
+1. Need to go creating a VM using portal, enter all the details and then download the template.
+2. Make changes if you want in template.
+3. On azure portal search for templates and open Template specs on azure portal.
+4. Import the template.
+
+Its a central deployment model which is like AWS Cloudformation.
+Its used for resource automation.
+Schema is fixed.
+ContentVersion used to version ARM templates.
+Parameters are the variables that can be passed into the templates.
+variables are basically parameters but they come from inside. i.e. they are a fixed string and they are not passed 
+from outside.
+resources contains array of one or more resources that we want to deploy.
+outputs 
+
+Read an ARM Template:
+        {
+            "name": "[parameters('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
+            }
+        },
+        Here, [parameters()] allows us to get the defined parameters.
+        like location we have defined as eastus2 
+        type is the type of resource that we are gong to create.
+Also, we can add dependency using depends_on for the resources.
+
+ARM using powershell:
+First Upload the template and parameters file on Azure built-in powershell->
+New-AzResourceGroupDeployment -TemplateFile 'template.json' -ResourceGroupName 'vm-arm' -TemplateParameterFile 'parameters.json'
+
+ARM Custom Script Extensions:
+https://github.com/Azure/azure-quickstart-templates -> Link
+Lets say we are using ARM template to deploy a windows or Linux virtual machine.
+So we need to do furthur configurations to install softwares and all.
+So for that we have a option of custom script extensions that can be deployed using arm 
+that will execute a script after thr VM is deployed.
+
+Alternative to custom script extension is to use existing VHD.
+
+
+

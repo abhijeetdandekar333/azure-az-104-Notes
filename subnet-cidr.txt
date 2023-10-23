@@ -1,0 +1,51 @@
+Classless InterDomain Routing (CIDR):
+e.g. 195.10.20.128/26 ->  
+/26 is number of network bits continuos 1's.
+Total bits in IP address = 32.
+32- 26 = host ID bits.
+26 bits: Network ID bits.
+
+195.10.20.128/26
+ |   |  |  |
+ 8   8  8  8(bits) octet.
+
+first 3 are 8+8+8= 24.
+but the last octet contains the host bits.
+195.10.20.10 000000   (128= 10000000)
+            |
+            The remaining 6 bits are of host bits.
+
+Never touch the networking bits while subnetting. In this case it is 26.
+Here now fix the most significant bit so that network is divided into 2 parts:
+195.10.20.10 000000 
+             |     
+
+
+VPC,Subnets,CIDR:
+We break vpc into subnets.(Break large network into smaller ones)
+Before creating a vpc decide how many number of IP addresses we need in network.
+e.g. We will create a network with 200+ IP addresses.
+CIDR: 172.31.0.0/24 -> 
+4 octets: Each octet is of 8 bits so total of 32 bits.
+172.31.0 -> Can choose any range.
+/24 is equivalent to 3 octets (8+8+8)
+and remaining 0 i.e. 4th octet is allocated to host portion.
+Network Portion: 24
+Host portion: 32-24 = 8 
+So,we can get 2^8 = 256 IP addresses inside VPC.
+
+Now break this VPC into 2 subnets(128 IPs in each subnet):
+Subnet1(128):
+172.31.0.0/25 -> 128 (IP Range: 0-127)
+
+Subnet2(128):
+172.31.0.128/25 -> 128 (IP Range: 128-256)
+Changed 0 to 128 for next range of IP addresses.
+
+
+
+CIDR: 172.31.0.0/25 ->
+Network Portion: 25
+Host portion: 32-25 = 7 
+So,we can get 2^7 = 128 IP addresses inside VPC.
+

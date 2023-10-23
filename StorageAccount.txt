@@ -1,0 +1,257 @@
+An Azure storage account contains all of your Azure Storage data objects: blobs, files, queues, and tables. 
+The storage account provides a unique namespace for your Azure Storage data that's accessible from anywhere in 
+the world over HTTP or HTTPS. Data in your storage account is durable and highly available, secure, and massively 
+scalable.
+
+Storage account contain access keys using which Anyone can access the Storage account if we enable 
+public networking.
+
+This is claims based access control (CBAC).
+Its convenient but not always entirely safe. 
+
+So, We will secure our storage account with azure Entra ID (Active Directory) using RBAC instad of access keys(CBAC).
+To enable RBAC on storage account and disable access using the access keys:
+Go to 
+Storage Accounts -> Configuration -> Enable azure active directory authorization
+
+On Access Control(IAM) (inside storage account) we can see and assign access to the storage.
+
+Roles:
+Owner:
+Grants full access including ability to assign roles in Azure RBAC.
+Contributor:
+Grants full access but does not allow to assign roles in Azure RBAC.
+Reader:
+View all resources but does not allow you to make changes.
+
+Using containers we can create or upload different data in different containers and assign different roles to 
+different users in storage account.
+
+If we want to create our own custom roles then we need to have access of P1 or P2 level.
+Steps to create a custom role:
+Go to Home -> Subscriptions -> Click on your subscription (e.g. free trial) -> Access Control -> Create a custom role
+We get three options which are to start from the scratch, clone an existing role and modify it, Start from JSON.
+So the roles that we create at subscription level will be applied to every storage account.
+Also we can add custom scope if we want to give access to specific Resource Group.
+
+Resource groups contains different resources like storage account.
+
+Resource Group Scope:
+We might have resources for development environment and for production environment and we want to give permissions 
+to wide range of people. Different people will have different access in development and production so we can 
+do it by providing roles at Resource Group level.
+
+Deny assignment: To deny user to perform specific action.
+Azure Blueprints: Blueprints enable quick creation of governed subscriptions. This allows Cloud Architects to 
+design environments that comply with organizational standards and best practices – enabling your app teams to 
+get to production faster.
+
+Access Tiers:
+1. Premium -> Most expensive
+2. Hot -> Frequent access
+3. Cool -> Infrequent access and use for backup
+4. Archive -> Least expensite
+
+Network Routing in Storage Accounts:
+Chooses the path that your data is going to travel.
+Two types:
+1. Microsoft network routing(More Secure): Suppose you have got a storage account in america and a customer in japan 
+who is outside of azure who wants to access that data so on this routing data will travel in microsoft azure 
+private network to japan and then it would exit azure onto the public internet in japan to connect to customer.
+2. Internet routing: In this routing data path will exit azure in america into the public internet and will travel
+across the public internet to japan.
+
+Data Protection in Storage Account:
+1. Recovery:
+Protect your data from accidental or erroneous deletion or modification.
+Soft delete for blobs: When you delete a file its not actually instantly deleted its just going to be marked for
+deletion and it will take number of days for deletion.
+We get soft delete options for blobs, containers, file shares.
+Enable Point-in-time restore for containers: We can restore one or more containers to an earlier state.
+If point in time restore is enabled, then versioning, change feed and blob soft delete must also be enabled. 
+
+Encryption type:
+Microsoft-managed keys (MMK)
+Customer-managed keys (CMK)
+
+Infrastructure encryotion:
+Second layer of encryption to storage account's data.
+
+Types of Data Storage:
+Containers(Blob Storage):
+Its like a box in which we can put files. There is no  concept here of folders and sub-folders.
+Its just a single container which holds set of the files.
+
+File Shares: Its like a traditional storage where we can store in C drive, D drive etc.
+Its a publicly sharable file structure with permissions.
+It is HIERARCHICAL. We can add directories and sub-directories.
+
+Queues:
+They are like a messaging service. One application can put a message on it and 
+another apllication can then read the queue. Messages goes in order. so the other application will read the
+first message 
+
+Tables(Semi Structured Data):
+Tables are a way of storing the data in a semi structured manner within your storage account.
+To add data in tables Go to Storage Browser and edit the tables.
+
+Access Keys and SAS:
+SAS: Shared Access Signature
+A shared access signature (SAS) is a URI that grants restricted access rights to Azure Storage resources. 
+You can provide a shared access signature to clients who should not be trusted with your storage account key but 
+whom you wish to delegate access to certain storage account resources. By distributing a shared access signature URI 
+to these clients, you grant them access to a resource for a specified period of time.
+We can give access to the users to only required services like only to blobs or to blobs and containers etc.
+And also give permissions.
+So assume we have added a pdf to the Storage account and someone wants access to it then we can shar the public url 
+of that pdf and attach the generated SAS token after the question mark(?), 
+We cant delete this token but we can rotate the key to
+remove access of SAS generated using previous access key.
+
+Stored Access Policies:
+We can give policies to containers directly bt adding the 
+access policy in container section and prviding time.
+If we want to add read, write access to a specific PDF or Document inside a container then we can create policy for container and then
+go to the PDF that we want to attach the policy and click on Generate SAS and select stored access policy and generate SAS token.
+
+Redundant Storage:
+Locally Redundant Storage: 2 additional copies will be stored in the same region.
+Geo-redundant storage: Azure will create another copy of the storage account in another region and make copy of files in that region.
+
+Access tier:
+How much you are going to get charged for access and storage.
+1. Hot: Default level (More for storage less for access)
+2. Cool: Its 50% cheaper than Hot tier for storage. But access cost is double. (More for access less for storage)
+Minimum period of billing is 30 days even if you remove file after 1 day you will becharged for 30 days.
+3. Archive: Cheaper to store files and way more expensive to access them, designed to store file that you almost never need.
+90% cheaper than hot tier. It may take several hours to retrieve the data. Charged for 180 days.
+4. cold storage: For rarely accessed data that you want to keep for at least 90 days.
+
+Storage account Performance tiers:
+Premium : 10 times faster than standard storage and has low latency.
+Standard : Low cost.
+
+Azure Entra ID access control for storage:(3rd way after access keys sas and secure access policy)
+Go to access control(IAM) set role assignemt and add roles to the users or to group or to a service principal(apps) like virtual machine, 
+app service etc.
+
+Under Operations:
+
+Azure file shares soft delete:
+It enables you to recover files shares that were previously marked for deletion.
+we can set retainment period in days. after that period the file will get deleted.
+
+Azure Backup on files:
+We can schedule a backup or manually click backup button. Create own policies for backups.
+
+Azure file shares snapshots:
+Add snapshot will add the files in that particular snapshot.
+Later we change to this file and we want to go back to some earlier version we can go back to snapshot for that version and
+retrieve that particular version. So snapshot is not a backup but its a point in time version of the file.
+It never expires like backup expires after 30 days.
+
+Azure Blob storage versioning:
+Use versioning to automatically maintain previous versions of your blobs.
+Consider your workloads, their impact on the number of versions created, and the resulting costs. Optimize costs by automatically 
+managing the data lifecycle. If someone deletes the current verion of blob still we can access the older versions of blob.
+In Lifecycle management, we can create a rule specific for file versions and set to move the versions older than 2 days to 
+cool storage as we will not need them frequently (rare use).
+
+Log Analytics:
+To track storage activities.
+On monitoring track we can see activities on storage account.
+Insights, Alerts, Metrics, Workbooks, Diagnostic settings, Logs.
+Insights shows all the activities using graphs and all.
+Using alerts we can set alert with some threshold.
+Using metrics we can create the graphs.
+Workbooks are the set of predefined templates. or we can create our own templatesand share them.
+Diagnostic setting specifies a list of categories of platform logs and/or metrics that you want to collect from a resource, and one 
+or more destinations that you would stream them to.
+Logs: We can write our own queries or execute predefined queries.
+
+Lifecycle management:
+Suppose in your storage account you want your files in hot storage for first 30 days and then after 30 days you 
+have to move them to cool storage to save money and after some days because of less use you have to move them in archive storage then,
+we can use Lifecycle Management.
+
+Moving large files via Azure Data Disk:
+We use azure data box to perform import/export operations.
+Its not available on free trial subscription its available on 
+Microsoft Customer Agreement (MCA) for new subscriptions or 
+Microsoft Enterprise Agreement (EA) for existing subscriptions.
+
+Types of Azure Data Box:
+We can fill up the disks that azure gives and then when we ship that data to them that time they will
+copy that data from disks to azure storage accounts.
+
+Data Box Disk:
+Total usable capacity per order: 35TB
+Up to 5 disks per order 
+Supports Azure blobs, files, managed disks and ADLS Gen2 accounts.
+Copy data to 1 storage account.
+USB 3.1/SATA interface
+
+Data Box:
+80TB
+10 day use without extra cost
+Supports Azure blobs, files, managed disks and ADLS Gen2 accounts.
+Copy data across 10 storage accounts.
+1x1/10 Gbps RJ45, 2x10 Gbps SFP+ interface
+
+Data Box Heavy:
+800TB
+20 day use without extra cost
+Supports Azure blobs, files, managed disks and ADLS Gen2 accounts.
+Copy data across 10 storage accounts.
+4x1 Gbps, 4x40 Gbps interface
+
+Free tier: Its a different process than azure data box.
+Import/Export Job:
+Send up to 10 disks per order
+Support SATA/SSD Disks 
+Supports Azure Blobs and files 
+copy data to 1 storage
+SATA ||/||| interface
+102 CAD Handling fee per disk
+
+Copy Files with AzCopy:
+Its a command line utility that you can use to copy blobs or files to or from a storage account.
+Available methods of authorization for AzCopy are Azure AD and SAS. It doesnt have access keys.
+
+Azure storage explorer: Similar like storage browser, storage explorer is a desktop app of storage browser that can be downloaded.
+Can be used to upload,download and manage azure storage blobs,files,queues and tables as well as azure data lake storage entities
+and azure managed disks.
+
+Object Replication:
+Taking new files added to storage container and copying them to different storage account is called object replication.
+We need to create a replication rule set the destination container, storage account and subscription.
+We can also add prefix matches it find items like folders and blobs under specified container that start with specified input. 
+e.g. Inputting "a" would filter any folders or blobs that start with "a". If multiple prefixes are specified, items that have any of these
+prefixes will be included. So files that start with "a" can be copied to one container and files that start with "b" can be 
+copied to some different container.
+So when we upload any data in source container then it will be automatically copied to destination container(can exist in dofferent 
+storage account) in read-only mode. and one &blobchangefeed container will be created in source container which tracks all the 
+logs for replication.
+This is object replication.
+
+Azure general purpose storage account can contain four types of storage objects like blobs, files, queues, Tables. It also
+can store Data Lake Storage Gen2.
+Standard general purpose storage can have a capacity of 5PiB. and we can request more upto 500PiB per subscription per region.
+Pricing range changes based on regions.
+File Share contains SMB File Share which can be used to mount a drive. 
+e.g. If you have 10 virtual machines and want to mount the same drive say T drive to work on and every virtual machine is pointing
+to the same T Drive spot.  we can create it as a file share and mount that T drive as a part of the script so they all can access the 
+T drive.
+Basically we can acces the same T drive in file share in multiple VMs.
+
+Azure File Sync: Used to take backup
+Azure File Sync in combination with Azure file shares allows you to centralize your organization's file shares in Azure, while keeping 
+the flexibility, performance, and compatibility of an on-premises file server.
+Sync Group is basically a group of files that are kept synchronized so we can basically pick which files and folders are
+going to get synchronized between file share and registered servers.
+
+Premium storage account: 
+For low storage latency.
+Three options:
+Block blobs, File Shares, Page Blobs.
+

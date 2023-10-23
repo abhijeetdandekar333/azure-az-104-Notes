@@ -1,0 +1,16 @@
+No any programming in .NET, Java, APIs.
+There is some scripting using Azure Portal, Powershell Az, Bash/CLI.
+
+JSON for templates and CLI responses.
+
+Azure Cloud Shell -> Bash and Powershell
+
+Microsoft switched from AzureRM module to Az.
+
+Commands Powershell:
+1. pwsh -> Command to start powershell on linux
+2. Install-Module -Name Az -AllowClobber -Force -> Installs latest Az module
+3. Get-InstalledModule -Name Az -AllVersions | Select-Object -Property Name, Version -> Shows versions of installed Az Modules
+4. Connect-AzAccount -> To connect to azure account.
+5. Get-AzSubscription -> Shows Subscriptions
+

@@ -1,0 +1,44 @@
+Virtual machine is same as EC2.
+It can be windows or Linux.
+Can be remotely connected using Remote Desktop (RDP) or SSH.
+It can be placed on a virtual network arranged in "availability sets", placed behind "load balancers".
+
+
+Azure Storage
+Blobs, queues, tables, files.
+Has replication types microsoft keeps 3 copies of files to avoid issues in hardware failure.
+11 9s of durability for locally redundant storage and 16 9s of durability for globally redundant storage.
+storage tiers (hot, cool, archive)
+
+Networking Services:
+Connectivity:
+1. Virtual Network (VNet)
+2. Virtual WAN
+3. ExpressRoute
+4. VPN Gateway
+5. Azure DNS
+6. Peering
+7. Bastion
+
+Security:
+1. Network Security Groups (NSG)
+2. Azure Private link
+3. DDoS Protection
+4. Azure Firewall
+5. Web Application Firewall (WAF)
+6. Virtual Network Endpoints
+
+Delivery:
+1. CDN
+2. Azure Front Door
+3. Traffic Manager
+4. Application Gateway
+5. Load Balancer
+
+Monitoring:
+1. Network Watcher
+2. ExpressRoute Monitor
+3. Azure Monitor
+4. VNet Terminal Access Point (TAP)
+
+

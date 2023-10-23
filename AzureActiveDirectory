@@ -1,0 +1,62 @@
+Azure AD:
+Secure your environment with multicloud identity and access management.
+
+Create users within directory with id and password and using these creds users can log in to different applications.
+It is a service that provides single-sign-on, multifactor authentication and conditional access to guard against 99.9% of cybersecurity attacks.
+
+Micorsoft azure AD is now being called as Microsoft Entra ID.
+
+Managing multiple directories:
+1. Account/User:
+A Person or a Program
+  Person - uses username, password, MFA.
+  App - Managed Identity
+  Represents program or service
+
+2. Tenant:
+A representation of an organization
+Represented by public domain example.com
+Every Azure Account is part of at least one tenant.
+
+    3. Subscription: 
+    Agreement with microsoft to use Azure services and how you are going to pay for that.
+
+4. Resource Groups:
+A way of organizinf resources in a subscription.
+A folder structure, It provides a way to seperating out projects, keeping unrelated things seperate.
+
+Administrative Units:
+Segregation of administrators.
+Suppose you have 10k users in directory and they are broken down into the departments like 
+customer service, marketing, sales team and there are users with helpdesk role to help them 
+for issues. But we dont want the customer helpdesk touching the salesforce team and vice versa.
+In this case we use administrative units.
+We can add groups of users or seperate users in a administrative unit. So that administrative unit with a user having role can control other users that are added in that unit.
+
+Roles and administrators: 
+It can be assigned to a user for performing some actions in azure.
+
+Devices:
+Devices represent and manage physical devices used by users that access organizations resources.
+Managed devices should have certain standards in terma of encryption, password requirements, antivirus running etc
+The devices that have these standards can access this application.
+Conditional access -> Allows you to restrict access to your application based on geographical location of user etc.
+The device should meet the criteria for access to application to laptop e.g company laptop is allowed but not personal laptop.
+
+Bulk operations:
+Microsoft works with arge data so bulk operations will allow to create multiple users by uploading a csv file
+containing usernames and passwords etc.
+
+What if want to provide access to external user like business partner who does not have an email address within our domain (i.e. without using domain name):
+For that we can use Invite User functionality.
+So that they can accept invitation and collaborate.
+
+In free tier if the user has to reset the pasword then they have to call the Administrator user to be able to reset their password. And then administrator has to reset the password for user.
+Self service password reset is available for administrator user.
+Password reset is used to give permission to users or group of users to reset the password.
+
+
+
+
+
+

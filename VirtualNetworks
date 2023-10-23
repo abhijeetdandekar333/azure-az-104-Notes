@@ -1,0 +1,48 @@
+Azure Virtual Network (VNet) is the fundamental building block for your private network in Azure. VNet enables many types of Azure resources, such as Azure Virtual Machines (VM), to securely communicate with each other, the internet, and on-premises networks. VNet is similar to a traditional network that you'd operate in your own data center, but brings with it additional benefits of Azure's infrastructure such as scale, availability, and isolation.
+
+Public IP Address:
+Create a public IP address from Marketplace and associate it with virtual machine.
+Internet resources communicate with azure resources through public IP address.
+Dynamic IP address: Changes
+Static IP Address: Remains same
+
+Network Routing:
+User Defined routes(UDR):
+When you create user defined route(Route Tables) then you are basically overriding default traffic rules
+and you can customize that.
+And the reason why you want to do this is that you might have a firewall and you want the traffic to instead
+of traveling directly to internet you want that to travel to the firewall and then the Firewall can make 
+the determination yes or no as to whether its going to allow the traffic to travel.
+
+Associate the Route Table with subnet.
+To override the routes, Go to to routes and add new routes.
+While adding the route Next hop type is something where we want the traffic to go.
+Select hop as virtual appliance and give private IP of firewall in next column.
+So by adding the rule any traffic that is trying to travel over the subnet to travel to the Firewall.
+
+
+Firewall Rules:
+Three types of Rules:
+NAT Rules collection: Network Address Translation:
+Its what gonna allow traffic that comes into the firewall over a certain port to be then forwarded to
+another device. e.g. Allow the RDP port 3389.
+Destination address is the Firewall address(public ip address of firewall).
+Translated address is the private address of VM
+So Basically, we are mapping public and private IP addresses.
+
+Network Rule collection:
+This is going to allow the server to access something on the public internet lets say by UDP or RTCP address.
+While adding rule:
+Source -> Subnet CIDR
+Destination address: Public servers that we want VM on given subnet to access.
+USed for DNS Lookups.
+
+Application Rule collection:
+Used to allow vm in given subnet in Source to access domain names by providing FQDNs.
+e.g Only to contact microsoft.com
+
+Virtual WAN: Global resource(doesn't have any region)
+Wide Area Network
+Concept : You have got two or more offices that need to communicate with each other and you are gonna use microsoft
+azure as a HUB where that communication goes into Azure and goes to the other office.
+Kind of site to site VPN.

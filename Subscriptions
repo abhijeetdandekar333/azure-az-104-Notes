@@ -1,0 +1,49 @@
+Subscription: Agreement with microsoft to use Azure services and how you are going to pay for that.
+We can move a subscription from one tenant to another tenant.
+In Subscriptions click on change directory to switch the tenant.
+
+Cost Analysis shows the total spending on azure resources.
+We can see Accumulated cost, forecast cost and locationwise cost etc.
+
+Cost alerts allow you to setup alerts to email when certain thresholds.
+
+Advisor recommendations: Runs constantly on your account and makes recommendations across number of categories and
+Cost is one of them.
+
+Resource Locks:
+Helps to avoid accidental deletion, modification and changes in resource groups. 
+Two types: Read-Only and Delete.
+If set to read-only it provides lock on any type of modifications and
+If set to delete lock it provides lock on deleting the resources and resource group.
+
+
+Azure Policy:
+Azure Policy helps to enforce organizational standards and to assess compliance at-scale.
+Common use cases for Azure Policy include implementing governance for resource consistency, regulatory compliance, security, cost, and management
+Define policies e.g. to have smaller SKUs for VM to reduce cost
+e.g. Geo-Redundant storage should be enabled for Storage Accounts in production resource group then
+we can apply this policy.
+
+Geo-redundant storage (GRS) is a feature of Azure Storage that provides durability and disaster protection for your data by replicating it to a secondary region that is hundreds of miles away from the primary region.
+
+tags: key values pairs that enable you to categorize resources and view consolidated billing by applying the same tag to multiple resources and resource groups.
+We can run reports to see cost of tagged resources based on tags in cost analysis.
+
+Move Resources:
+No need to delete resources and recreate them in order to reorganize resources.
+Inside resource group select resources that we want ot move and Click on Move button which gives three options
+which are 1. Move to another resource group 2. Move to another subscription 3. Move to another region.
+
+Steps to create resource group and assign policy using Powershell:
+1. New-AzResourceGroup -Name 'Staging_VMs' -Location 'Central US' 
+2. $rg = Get-AzResourceGroup -Name 'Staging_VMs' -Location 'Central US' 
+3.  $definition = Get-AzPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a'
+4. New-AzPolicyAssignment -Scope $rg.ResourceId -PolicyDefinition $definition -Name 'RGLocationMatch' -DisplayName `{Resource group matches resources location`}
+
+
+Subscriptions and Management Groups:
+Different subscriptions for different credit card.
+Management group is basically a organization structure it is a folder that
+contains other management groups or subscriptions.
+Like resource group which manages resources 
+this management group manages permissions of subscriptions.

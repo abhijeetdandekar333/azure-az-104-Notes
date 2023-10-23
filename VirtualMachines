@@ -1,0 +1,161 @@
+VM Size: 
+D Series: Recommended for General Purpose needs.
+B Series: Ideal for workloads that do not need continuos full CPU performance.
+E Series: Used for high memory needs.
+F Series: 2X performance boost for vector processing workloads.
+
+
+Azure VM Disks: Different types of disks:
+1. Operating system disk (OS Disk):
+-> Locally redundant storage:
+   a. Premium SSD : Best for performance and production sensitive workloads.
+   b. Standard SSD : Best for web servers, lightly used applications dev/test
+   c. Standard HDD : Best for backup, non-critical and infrequent access.
+-> Zone Redundant Storage:
+    a. Premium SSD: Best for performance and production sensitive workloads that needs resiliency against zone failures.
+    b. Standard SSD: Best for web servers, lightly used applications dev/test that needs resiliency against zone failures.
+
+2. Data disks: 
+You can add and configure additional data disks for your virtual machine or attach existing disks. This VM also comes with a temporary disk.
+
+VM disk encryption:
+Azure disk storage encryption automatically encrypts your data stored on Azure managed disks (OS and data disks) at rest by default when persisting it to the cloud.
+
+Ultra Disk Compatibility: 
+Azure Ultra Disks deliver high throughput, high IOPS, and consistent low latency disk storage for Azure IaaS VMs. 
+
+
+Networking: 
+We need a Virtual network while creating a vm. 
+virtual network is same as VPC.
+Virtual network has a range of IP addresses and we can subdivide the virtual network into
+subnets.
+Basically subnet is a range of IP addresses in your virtual network which can be used to isolate 
+virtual machines from each other or from the internet. e.g. database-server subnet, development server subnet etc.
+
+subnet uses CIDR:
+e.g. 10.1.0.0/24
+Here, 24 is a bit mask so, smaller the bit mask and the more IP addresses allocated.
+10.1.0.0 is private range.
+
+Public IP address: to access vm 
+
+NIC Network security group: same like security groups in AWS.
+
+Public inbound ports: we can select the inbound ports that we want.
+
+Accelerated networking: Used for high performance computing.
+
+Load Balancing: 
+Azure Load Balancer:
+Application Gateway:
+Supports all TCP/UDP network traffic, port-forwarding, and outbound flows.
+Web traffic load balancer for HTTP/HTTPS with URL-based routing, SSL termination, session persistence, and web application firewall.
+
+Management:
+We can set AutoShutdown of VM or backup, Guest OS Patches, Disaster recovery, Azure AD login 
+Use your corporate Active Directory(AD) credentials to log in to the VM, enforce MFA, and enable access via RBAC roles.
+
+Monitoring: 
+We can enable alert rules like if CPU utilization is greater than 80 then send alert, Boot diagnostics (Problem while booting vm), OS guest diagnostics etc.
+
+Advanced:
+We can install different agents and extensions like custom script extension.
+
+NVMe can be used for higher workload.
+
+Azure Dedicated hosts: You can have you own physical server within azure's data center that are dedicated to your
+Azure Subscription.
+
+Proximity placement group: Allows you to group azure resources physically closer together in the same region.
+
+Azure Bastion: 
+Azure Bastion protects your virtual machines by providing lightweight, browser-based connectivity without 
+the need to expose them through public IP addresses. Deploying will automatically create a Bastion host on a 
+subnet in your virtual network.
+Azure Bastion is a paid service that provides secure RDP/SSH connectivity to your virtual machines over TLS. When you connect via Azure Bastion, your virtual machines do not need a public IP address.
+
+Azure Firewall:
+Azure Firewall is a managed cloud-based network security service that protects your Azure Virtual Network resources.
+
+Azure DDoS Network Protection:
+Azure DDoS Network Protection is a paid service that offers enhanced DDoS mitigation capabilities via adaptive tuning, attack notification, and telemetry to protect against the impacts of a DDoS attack for all protected resources within this virtual network.
+
+Remote Desktop Protocol: 
+Most Linux machines do not have RDP enabled. Use SSH or install a desktop environment like xRDP.
+
+Virtual machine Availability Options:
+1. Availability Zone: Physically seperate your resources within azure region
+2. Virtual machine scale set: Distribute VMs across zones and fault domains at scale
+3. Availability Set: Automatically distribute your VMs across multiple fault domains. Used to define 
+that this VM is going to be part of the set that means there going to be the duplicate vms that have
+same function and purpose. Azure protects them from hardware failure as Availability set seperates the
+vms for safety. This is good if we have 2 or more VMs, they will be kept in set.
+
+Availability Set: (Doesn't Come with a Load Balancer)
+Group two or more VMs in an availability set to ensure that at least one is available during planned or unplanned maintenance events.
+fault domains: 
+Virtual machines in the same fault domain share a common power source and physical network switch.
+Upto 3 fault domains.
+e.g. if you have 2 fault domains and 2 VMs then each VM will have different power source.
+update domains: Virtual machines in the same update domain will be restarted together during planned maintenance. Azure never restarts more than one update domain at a time.
+e.g. upto 20 update domains. Used for planned maintainance activities.
+While rolling out new update if I have 5 update domains and 20 virtual machines then this should affect 4 vms.
+
+Availability zones:
+Represents datacenter within a region. So, the datacenters in particular region are divided into 3 zones.
+So, WHEN WE CREATE A VM WITH ONE ZONE THEN WE ARE CHOOSING THAT SET OF DATACENTERS THAT REPRESENTS THAT ZONE.
+zones are physically seperated buildings having seperate internet, power, colling etc.
+
+Additional Disks:
+We can attach additional disks to VM.
+
+Virtual machine scale set: (Comes with a Load Balancer)
+Its a way to increase number of VMs based on some criteria like CPU Utilization.
+You can add your virtual machine to a virtual machine scale set to design highly available and scalable application architecture. Virtual machines inside a scale set can be deployed into fault domains or Availability zones. The scale set must be set to flexible orchestration mode, and in the same region and resource group.
+Its like auto scaling group in aws, used for horizontal scaling.
+No additional cost to use VMSS other than cost of VM.
+Provides monitoring, horizontal scaling for free.
+Orchestration: 
+a. Flexible:(No availability sets)
+achieve high availability at scale with identical or multiple virtual machine types
+b. Uniform:(Availability sets)
+optimized for large scale stateless workloads with identical instances
+
+Network interface:
+A network interface enables an Azure virtual machine to communicate with internet, Azure, and on-premises resources. A VM can have one or more network interfaces.
+
+Overprovisioning:
+With overprovisioning turned on, the scale set actually spins up more VMs than you asked for, then deletes the extra VMs once the requested number of VMs are successfully provisioned. Overprovisioning improves provisioning success rates and reduces deployment time. You are not billed for the extra VMs, and they do not count toward your quota limits.
+
+Create a VM in Powershell:
+New-AzResourceGroup -Name 'myrg' -Location 'EastUS' -> To Create resource group
+New-AzVM -Name vmbypowershell -ResourceGroupName 'myrg' -Location EastUS -> To create a VM (Not provided size and all)
+Invoke-AzVMRunCommand -ResourceGroupName 'myrg' -VMName 'vmname' -CommandId 'RunPowerShellScript' -ScriptString 'Install-WindowsFeature -Name Web-Server -IncludeManagementTools' 
+-> To install windows feature i.e. windows server on VM.
+
+To stop and start the VM:
+Stop-AzVM -ResourceGroupName "" -Name ""
+Start-AzVM -ResourceGroupName "" -Name ""
+To delete the VM:
+Remove-AzVM -ResourceGroupName "" -Name ""
+To delete the ResourceGroup:
+Remove-AzResourceGroup -ResourceGroupName "" -Name ""
+
+To create Image from a VM:
+Click on the VM and Click on Capture button.
+Type name of VM and create.
+So the VM will get deleted and Image will be created- which can be used to create new VMs.
+Now create Virtual machine scale set(VMSS) i.e. autoscaling group using the Image that we have created.
+
+VM Server-side Encryption(SSE):
+While creating the VM:
+We can encrypt the OS disk using:
+1. Platform-managed key
+2. Customer-managed key
+3. Double encryption with Platform-managed key and Customer-managed key.
+The same encryption is available while creating a secondary disk.
+
+Azure Disk Encryption:
+Enable bit locker within windows to encrypt content stored in virtual disk.
+Require Key-Vault.

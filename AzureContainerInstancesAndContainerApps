@@ -1,0 +1,38 @@
+Container -> Take a piece of code and package it in one image and deploy that image on any Cloud.
+Azure Container Instances (ACI) allows you to quickly and easily run containers on Azure without managing 
+servers or having to learn new tools. It runs your application in a container and running in the cloud.
+Makes development and deployment faster.
+
+Drawback is we cannot scale easily the container counts.
+In irder to do scaling we have to redeploy the image to new azure container instance.
+We have to change the size and eploy it again.
+
+We need to use it with AKS to scale by orchestrating.
+
+ACI container groups:
+They are collection of containers that are running in the same host.
+We cannot create container groups on Azure Portal, we need to create them using CLI by ARM template.
+STEPS: 
+Template is given on below link:
+https://learn.microsoft.com/en-us/azure/container-instances/container-instances-multi-container-group?source=recommendations
+
+On Azure CLI:
+1. code azuredeploy.json -> Creates azuredeploy.json and opens in editor.
+2. Copy the template in it.
+3. az group create --name myRg --location eastus -> Create a resource group for the container group
+4. az deployment grouo create --resource-group --template-file azuredeploy.json  -> creates container groups inside rg. 
+5. az container --resource-group myRg --name myContainerGroup --output table -> Shows the container group.
+
+
+Azure Container Apps(serverless containers):
+Build and deploy modern apps and microservices using serverless containers.
+Contains scalability of kubernetes services(AKS) along with the simplicity of the container instances(ACI).
+
+Container Apps Environment: 
+The environment is a secure boundary around one or more container apps that can communicate with each other and share a virtual network, logging, and Dapr configuration.
+We have ability to scale.
+
+Azure Container registry: Used to store images
+Azure Container Registry allows you to build, store, and manage container images and artifacts in a private registry for all types of container deployments. Use Azure container registries with your existing container development and deployment pipelines. Use Azure Container Registry Tasks to build container images in Azure on-demand, or automate builds triggered by source code updates, updates to a container's base image, or timers.
+
+
