@@ -1,0 +1,17 @@
+NSG is a filter which either allows or denies traffic travelling over the network to reach its intended destination.
+It is attached to Virtual Machine.
+NSG works for both traffic coming into the subnet and going out of the subnet.
+We can add allow and deny rules.
+We can have two NSGs combined one at subnet level and other at VM lebel attached to network interface But it is
+a bad practice and increases complexity.
+
+e.g. there are three rules one with priority 65000 which allows Vnet outbound traffic, 2nd with priority of 
+65001 which allows internet outbound and 3rd is 65500 which denies all outbound traffic, then
+all the traffic for 1st two rules will be allowed and except that traffic other traffic will be denied.
+
+
+Application Security Groups:
+Set destination in NSG as the private ip of the VM. so that traffic will only go to that VM over
+ort 80(http) or port 443(https) from any source. but its complex to understand so we use application security group.
+We need to create ASG and add VM to ASG. and edit the NSG that we have created add add the ASG in it while creatung the rule.
+

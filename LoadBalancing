@@ -1,0 +1,30 @@
+Load Balancer:
+It is a device that distributes traffic that comes in to multiple servers(VMs) behind it.
+
+Azure Load Balancing Services:
+Azure Load Balancer: layer 4 load baalncer. (Transport layer)
+It used 5 tuple (source IP, source port, destination port, protocol type)
+    Basic SKU: Only supports basic features free upto 300 instances in the backend pool.(Free to use)
+    standard SKU (Not free): recommended for production workloads, has SLA, NAT Gateway support, Private link support, Availability zone support, upto 1000 instances in backend pool
+    Gateway SKU: Not covered in AZ-104
+
+Frontend IP configuration: Here we create the public IP address in loadbalancer which acts as a public ip for our application.
+Backend pools: Its a collection of resources tow which your load balancer send traffic. It can contain VMs, VM scale sets and containers.
+All machines in backend pool shoould be in same vnet and vnet should be in same region as load balancer.
+Set inbound and outbound rules.
+
+Health probes: they are used to check the status of a backend pool instance. If the health probe fails to get a response from a backend instance then no new connections will be sent to that backend instance until the health probe succeeds again. 
+
+Load balancing rule:
+Its distributes the incoming traffic that is sent to selected IP address and port combination across a group of backend pool instances.
+
+Network address translation (NAT Rules): Unlike load balancing rules where we provide pool of instances as backend in NAT rules we need to set the target virtual machine.
+So, NAT rule forwards incoming traffic sent to selected IP address and port combination to a specific VM.
+
+Azure Application Gateway: (Not free)
+Normal above Load balancer works at transport layer it cannot undestand the path so if you need the load balancing based on what the user has typed in the URL then we can use Azure Application Gateway.
+Its layer 7 so understands http rules and also it has firewall associated with it.
+we can perform Path based routing in this.
+e.g. /images traffic in url will go vm1. 
+/info traffic in url will go vm2.  etc.
+It has more benefits over normal load balancer.

@@ -1,0 +1,8 @@
+Peering is Used to setup a relation between two vnets.
+IP Addresses should be non overlapping in two vnets.
+We need to create two peering link vnet1 to 2 and 2 to 1 i.e. outbound and inbound links.
+
+Global Peering -> Peer vnet from different regions.(More Cost compared to same region peering)
+
+Azure to Azure Virtual Network Gateway:
+Virtual network gateway is also used as the device used to setup vpn like site to site or point to site vpn.

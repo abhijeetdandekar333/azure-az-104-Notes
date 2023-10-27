@@ -1,0 +1,22 @@
+Domain Name System(DNS):
+Its like a phone directory to internet.
+e.g. Domain name like microsoft.com gets turned into 40.112.72.205 IP address.
+IP address is used by computers or servers to communicate with each other.
+
+In Azure for VMs there are three options:
+Azure provides DNS(default) :
+No configuration required.
+Can use hostnames to connect to machines on same VNet.
+A VM can refer to another VM on the same network just by its hostname without requiring a fully-qualified domain name.
+
+You provide DNS (run your own DNS server):
+
+
+
+
+Azure Private DNS:
+Create your own custom domain names and have them recognized by your VMs.
+i.e. dev.local, staging.local, production.local.
+Only valid on your own virtual network.
+Not valid on the internet
+Doesnt have to be registered or valid domain

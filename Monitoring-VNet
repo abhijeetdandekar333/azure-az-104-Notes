@@ -1,0 +1,38 @@
+Monitoring the Virtual network:
+Network Watcher:
+It consists of 4 parts:
+1. Monitoring tools:
+a. Topology: It contains topology tool which can be used to visualize the structure if our VNet.
+b. Connection Monitor: It is used to check connection between two azure resources.
+e.g. Monitors communication between two VMs in VNet.
+c. Network performance monitor(deprecated):
+Not recommended.
+
+2. Network diagnostic tools:
+a. IP flow verify:
+To check if a packet is allowed or denied to or from a virtual machine based on 5 tuple information.
+e.g. port 80 is blocked by nsg then it will show us the reason of access denied dute to 
+nsg rule.
+
+b. NSG diagnostics:
+Provides the detail info to understand and debug security confi of your network.
+
+c. Next Hop: It provides the next hop from the target virtual machine to destination IP address.
+d. Effective security rules
+e. VPN Troubleshoot
+f. Packet Capture
+g. Connection troubleshoot
+
+3. Metrics:
+Shows usage and quotas of azure services by region.
+
+4. Logs:
+a. NSG Flow Logs:
+We can capture packets(traffic) and store logs of it in storage account.
+
+b. Diagnostic Logs:
+Contains different types of diagnostics settings for different resources:
+We can send metrics logs to any destination
+workspace. also to storage account, event hub etc.
+
+c. Traffic Analysis:
